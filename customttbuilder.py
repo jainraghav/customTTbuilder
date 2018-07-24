@@ -3,6 +3,22 @@ from decimal import Decimal
 from PIL import Image
 import os
 import shutil
+import argparse
+
+class Options():
+    def __init__(self):
+        parser = argparse.ArgumentParser(description='Custom TT Builder',
+                                        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+        parser.add_argument('--tmplt_path', type=str, default="TT-1.jpg" ,help='Path to the empty TimeTable template image')
+        parser.add_argument('--save_as', type=str, default="custom_TT.jpg"  ,help='Final saved time table img name')
+        parser.add_argument('--pdfpath', type=str, default="TimeTable.pdf"  ,help='input TimeTable pdf file path')
+        parser.add_argument('--sublist', nargs='+',help='Course codes input list', required=True)
+
+        self.parser = parser
+
+    def parse(self):
+        return self.parser.parse_args()
 
 def process(pdfpath,input):
     pdf = pdfplumber.open(pdfpath)
@@ -64,19 +80,21 @@ def check_overlap(A,B):
     return True
 
 if __name__ == '__main__':
-    input = ["ML","AI","IA","EVS","Tcom","CN"]
-    ttpdf_path = "TimeTable.pdf"
+    args = Options().parse()
+
+    #input = ["ML","AI","IA","EVS","Tcom","CN"]
+    input = args.sublist
+    ttpdf_path = args.pdfpath
     finalpaste,p0 = process(ttpdf_path,input)
     #Saving
     print("Saving boxes to extract...")
     directory = "saved_boxes/"
-
     cropNsave(p0,directory,finalpaste)
 
-    base = Image.open("TT-1.jpg")
+    base = Image.open(args.tmplt_path)
     orig_size = p0.to_image().original.size
     base = base.resize((orig_size[0],orig_size[1]),Image.ANTIALIAS)
     #Pasting boxes on the template
     print("Almost Ready...")
-    saved_image = "new_img.jpg"
+    saved_image = args.save_as
     paste_everything(directory,base,saved_image)
