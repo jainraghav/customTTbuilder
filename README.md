@@ -15,4 +15,5 @@ python customttbuilder.py --pdfpath <TTpdf-path> --sublist <course-code1> <cours
 ```
 python customttbuilder.py --pdfpath "TimeTable.pdf" --sublist ML AI CN IA Tcom EVS
 ```
+![alt text](https://github.com/jainraghav/customTTbuilder/blob/master/example/example.jpg "Example")
 
