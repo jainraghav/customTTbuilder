@@ -10,9 +10,9 @@ class Options():
         parser = argparse.ArgumentParser(description='Custom TT Builder',
                                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-        parser.add_argument('--tmplt_path', type=str, default="TT-1.jpg" ,help='Path to the empty TimeTable template image')
+        parser.add_argument('--tmplt_path', type=str, default="example/TT-1.jpg" ,help='Path to the empty TimeTable template image')
         parser.add_argument('--save_as', type=str, default="custom_TT.jpg"  ,help='Final saved time table img name')
-        parser.add_argument('--pdfpath', type=str, default="TimeTable.pdf"  ,help='input TimeTable pdf file path')
+        parser.add_argument('--pdfpath', type=str, default="example/TimeTable.pdf"  ,help='input TimeTable pdf file path')
         parser.add_argument('--sublist', nargs='+',help='Course codes input list', required=True)
 
         self.parser = parser
